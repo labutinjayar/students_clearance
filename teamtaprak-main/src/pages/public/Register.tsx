@@ -94,25 +94,25 @@ export function Register() {
         <div className="absolute top-1/2 -right-32 w-96 h-96 bg-yellow-400/20 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
-      <section className="px-6 md:px-12 lg:px-16 xl:px-24 py-12 md:py-16 w-full max-w-[1600px] mx-auto flex-1 flex items-center relative z-10">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <section className="px-3 sm:px-6 md:px-12 lg:px-16 xl:px-24 py-8 sm:py-12 md:py-16 w-full max-w-[1600px] mx-auto flex-1 flex items-center relative z-10">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           
           {/* Left Column */}
           <div className="login-page-copy flex flex-col lg:col-span-7">
-            <div className="inline-flex items-center gap-2 bg-yellow-400 text-yellow-950 border border-yellow-500 text-xs font-black px-3 py-1 rounded-full uppercase mb-4 shadow-md self-start">
+            <div className="inline-flex items-center gap-2 bg-yellow-400 text-yellow-950 border border-yellow-500 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full uppercase mb-3 sm:mb-4 shadow-md self-start">
               Samar State University • Main Campus
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-black text-white tracking-tight mb-4 leading-[1.15] max-w-xl drop-shadow-md">
+            <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-black text-white tracking-tight mb-3 sm:mb-4 leading-[1.15] max-w-xl drop-shadow-md">
               Create your official <span className="text-yellow-400 underline decoration-yellow-400 decoration-4 underline-offset-4">clearance account</span>
             </h2>
-            <p className="text-base sm:text-lg text-sky-100 font-medium leading-relaxed max-w-xl mb-8 drop-shadow-xs">
-              Register with your institutional details to request online subject clearances, monitor signed requirements, and generate tamper-proof certificates.
+            <p className="text-sm sm:text-lg text-sky-100 font-medium leading-relaxed max-w-xl mb-5 sm:mb-8 drop-shadow-xs">
+              Register with your institutional details to request online subject clearances, monitor signed requirements, and access your clearance certificate.
             </p>
           </div>
 
           {/* Right Column */}
           <div className="flex justify-center lg:justify-end lg:col-span-5">
-            <div className="login-card-enter bg-white/95 backdrop-blur-md p-8 lg:p-10 rounded-3xl border-2 border-yellow-400/80 shadow-[0_16px_40px_-8px_rgba(202,138,4,0.15)] w-full max-w-[460px]">
+            <div className="login-card-enter bg-white/95 backdrop-blur-md p-5 sm:p-8 lg:p-10 rounded-3xl border-2 border-yellow-400/80 shadow-[0_16px_40px_-8px_rgba(202,138,4,0.15)] w-full max-w-[460px]">
               <div className="text-center mb-6">
                 <div className="inline-block bg-yellow-100 border border-yellow-300 px-3 py-1 rounded-full mb-2">
                   <span className="text-xs font-extrabold text-yellow-800 uppercase tracking-wider">New Student / Faculty</span>

@@ -104,32 +104,33 @@ export function AdminSubjects() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
         <div>
           <h1 className="text-[28px] font-black text-sky-950 mb-1 tracking-tight">Curricular Subjects</h1>
           <p className="text-sky-900/80 text-[15px] font-medium">Define and manage academic subjects required for student clearance verification.</p>
         </div>
-
-        <button
-          onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-yellow-950 border border-yellow-500 text-xs font-black rounded-2xl shadow-2xs transition-colors self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          Add New Subject
-        </button>
       </div>
 
       {/* Search Bar */}
       <div className="bg-white/95 backdrop-blur-xs p-4 rounded-3xl border-2 border-sky-200/80 shadow-xs">
-        <div className="relative max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-sky-400" />
-          <input
-            type="text"
-            placeholder="Search subjects by code or descriptive title..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-sm bg-sky-50 border border-sky-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white text-sky-950 font-medium"
-          />
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 min-w-0">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-sky-400" />
+            <input
+              type="text"
+              placeholder="Search subjects by code or descriptive title..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 text-sm bg-sky-50 border border-sky-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white text-sky-950 font-medium"
+            />
+          </div>
+          <button
+            onClick={handleOpenAdd}
+            className="inline-flex shrink-0 items-center gap-2 px-3 sm:px-4 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-yellow-950 border border-yellow-500 text-xs font-black rounded-2xl shadow-2xs transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            <span className="hidden min-[380px]:inline">Add New Subject</span>
+          </button>
         </div>
         <div className="mt-4 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-2">
           {(['department', 'academicYear', 'semester', 'yearLevel', 'section', 'instructor', 'status'] as const).map(key => (

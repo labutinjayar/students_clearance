@@ -30,7 +30,7 @@ export function AdminSchedules() {
         </button>
       </div>
 
-      <div className="grid grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-4 mb-8">
         {dates.map((d, i) => (
           <div 
             key={i} 

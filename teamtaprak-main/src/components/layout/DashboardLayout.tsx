@@ -10,7 +10,9 @@ import {
   BookOpen,
   Award,
   Settings,
-  Mail
+  Mail,
+  Menu,
+  X
 } from 'lucide-react';
 import { useDb } from '../../context/DbContext';
 
@@ -20,6 +22,7 @@ export function DashboardLayout() {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => localStorage.getItem('ssu_sidebar_collapsed') === 'true');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleSidebar = () => {
@@ -80,7 +83,7 @@ export function DashboardLayout() {
   return (
     <div className="flex flex-col h-screen w-full bg-sky-50 font-sans text-sky-950 overflow-hidden academic-bg-pattern page-reveal">
       {/* Top Header - Note: overflow-hidden removed so user profile popup can render cleanly without clipping */}
-      <header className="h-16 bg-sky-950/95 text-white border-b border-yellow-400/40 flex items-center justify-between px-6 shrink-0 z-40 shadow-[0_12px_30px_-18px_rgba(8,47,73,0.8)] relative backdrop-blur-xl">
+      <header className="h-16 bg-sky-950/95 text-white border-b border-yellow-400/40 flex items-center justify-between gap-2 px-3 sm:px-6 shrink-0 z-40 shadow-[0_12px_30px_-18px_rgba(8,47,73,0.8)] relative backdrop-blur-xl">
         {/* Background watermark seal accent at logo - contained inside an absolute overflow-hidden wrapper */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -left-6 -top-6 w-32 h-32 opacity-15 rounded-full overflow-hidden">
@@ -88,27 +91,36 @@ export function DashboardLayout() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 relative z-10">
-          <div className="w-12 h-12 rounded-2xl bg-white border-2 border-yellow-400 flex items-center justify-center overflow-hidden shrink-0 shadow-lg ring-2 ring-yellow-300/30 p-0.5 transition-transform duration-300 hover:scale-105 hover:rotate-2">
+        <div className="flex items-center gap-2 sm:gap-3 relative z-10 min-w-0">
+          <button
+            type="button"
+            onClick={() => setIsMobileSidebarOpen((open) => !open)}
+            aria-label={isMobileSidebarOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMobileSidebarOpen}
+            className="md:hidden p-2 -ml-2 rounded-lg hover:bg-sky-700 text-white transition-colors shrink-0"
+          >
+            {isMobileSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white border-2 border-yellow-400 flex items-center justify-center overflow-hidden shrink-0 shadow-lg ring-2 ring-yellow-300/30 p-0.5 transition-transform duration-300 hover:scale-105 hover:rotate-2">
             <img 
               src="/ssu_official_logo.png" 
               alt="Samar State University Official Logo" 
               className="w-full h-full object-contain" 
             />
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <h1 className="text-white font-black text-lg leading-tight uppercase tracking-wider drop-shadow-2xs">SSU Clearance</h1>
-              <span className="bg-yellow-400 text-yellow-950 border border-yellow-500 text-[9px] font-black px-1.5 py-0.2 rounded uppercase shadow-2xs">
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <h1 className="text-white font-black text-sm sm:text-lg leading-tight uppercase tracking-wider drop-shadow-2xs truncate">SSU Clearance</h1>
+              <span className="hidden sm:inline bg-yellow-400 text-yellow-950 border border-yellow-500 text-[9px] font-black px-1.5 py-0.2 rounded uppercase shadow-2xs">
                 Portal
               </span>
             </div>
-            <span className="text-[10px] text-sky-100 uppercase font-extrabold tracking-wider">Samar State University</span>
+            <span className="text-[9px] sm:text-[10px] text-sky-100 uppercase font-extrabold tracking-wider truncate">Samar State University</span>
           </div>
         </div>
 
         {user && (
-          <div className="flex items-center gap-3 md:gap-4 relative z-10">
+          <div className="flex items-center gap-1 sm:gap-3 md:gap-4 relative z-10">
             {/* Quick Notification Bell (Student & Instructor) */}
             {user.role !== 'admin' && (
               <button 
@@ -154,7 +166,7 @@ export function DashboardLayout() {
               {isDropdownOpen && (
                 <div 
                   id="user-profile-dropdown-menu"
-                  className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-[0_16px_40px_-6px_rgba(14,165,233,0.3)] border-2 border-yellow-400 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-100"
+                  className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-1rem)] bg-white rounded-2xl shadow-[0_16px_40px_-6px_rgba(14,165,233,0.3)] border-2 border-yellow-400 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-100"
                 >
                   {/* User Profile Header Card */}
                   <div className="px-4 py-3.5 border-b border-sky-100 bg-gradient-to-r from-sky-50 via-sky-100/60 to-yellow-50/60">
@@ -262,10 +274,23 @@ export function DashboardLayout() {
       </header>
 
       {/* Main Content Area */}
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar isCollapsed={isSidebarCollapsed} onToggle={toggleSidebar} />
-        <main className="flex-1 overflow-y-auto bg-gradient-to-br from-sky-100/70 via-sky-50 to-sky-100/80 p-6 md:p-8">
-          <div className="max-w-6xl mx-auto">
+      <div className="flex flex-1 min-h-0 overflow-hidden relative">
+        {isMobileSidebarOpen && (
+          <button
+            type="button"
+            aria-label="Close navigation menu"
+            onClick={() => setIsMobileSidebarOpen(false)}
+            className="fixed inset-0 z-40 bg-sky-950/55 md:hidden"
+          />
+        )}
+        <Sidebar
+          isCollapsed={isSidebarCollapsed}
+          onToggle={toggleSidebar}
+          isMobileOpen={isMobileSidebarOpen}
+          onMobileClose={() => setIsMobileSidebarOpen(false)}
+        />
+        <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden bg-gradient-to-br from-sky-100/70 via-sky-50 to-sky-100/80 p-3 sm:p-6 md:p-8">
+          <div className="max-w-6xl mx-auto min-w-0 w-full">
             <Outlet />
           </div>
         </main>

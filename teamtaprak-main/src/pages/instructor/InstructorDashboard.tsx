@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useDb } from '../../context/DbContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { GradeSignatureModal } from '../../components/instructor/GradeSignatureModal';
+import { DashboardMetricPanel } from '../../components/ui/DashboardMetricPanel';
 import { 
   FileSignature, 
   CheckCircle, 
@@ -66,6 +67,12 @@ export function InstructorDashboard() {
   const uniqueSubjectIds = Array.from(new Set(myAssignments.map(sa => sa.subjectId)));
   const myAssignedSubjects = subjects.filter(s => uniqueSubjectIds.includes(s.id));
   const uniqueStudentIds = Array.from(new Set(myAssignments.map(sa => sa.studentId)));
+  const instructorMetrics = [
+    { label: 'Pending Requests', detail: 'Awaiting your review', value: pendingRequests.length, icon: Clock, color: 'text-yellow-700' },
+    { label: 'Approved Signatures', detail: 'Clearances you completed', value: approvedCount, icon: CheckCircle, color: 'text-emerald-700' },
+    { label: 'Rejected Requests', detail: 'Returned for student action', value: rejectedCount, icon: AlertCircle, color: 'text-red-700' },
+    { label: 'Assigned Students', detail: 'Students in your classes', value: uniqueStudentIds.length, icon: Users, color: 'text-sky-800' },
+  ];
 
   const handleSubmitGrade = async (grade: number, signatureSvg: string, remarks: string) => {
     if (!selectedForApprove || !user) return { success: false, message: 'Your instructor session has expired. Sign in again.' };
@@ -164,28 +171,11 @@ export function InstructorDashboard() {
         </div>
       </div>
 
-      {/* 4 Stat Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white/95 backdrop-blur-xs p-6 rounded-3xl border-2 border-sky-200/80 shadow-xs flex flex-col justify-center">
-          <div className="text-xs font-black text-sky-800 uppercase tracking-wider mb-2">Pending Requests</div>
-          <div className="text-4xl font-black text-yellow-600">{pendingRequests.length}</div>
-        </div>
-        
-        <div className="bg-white/95 backdrop-blur-xs p-6 rounded-3xl border-2 border-sky-200/80 shadow-xs flex flex-col justify-center">
-          <div className="text-xs font-black text-sky-800 uppercase tracking-wider mb-2">Approved Signatures</div>
-          <div className="text-4xl font-black text-emerald-600">{approvedCount}</div>
-        </div>
-
-        <div className="bg-white/95 backdrop-blur-xs p-6 rounded-3xl border-2 border-sky-200/80 shadow-xs flex flex-col justify-center">
-          <div className="text-xs font-black text-sky-800 uppercase tracking-wider mb-2">Rejected Requests</div>
-          <div className="text-4xl font-black text-red-500">{rejectedCount}</div>
-        </div>
-
-        <div className="bg-white/95 backdrop-blur-xs p-6 rounded-3xl border-2 border-sky-200/80 shadow-xs flex flex-col justify-center">
-          <div className="text-xs font-black text-sky-800 uppercase tracking-wider mb-2">Total Assigned Students</div>
-          <div className="text-4xl font-black text-sky-950">{uniqueStudentIds.length}</div>
-        </div>
-      </div>
+      <DashboardMetricPanel
+        title="Instructor Overview"
+        description="Signature requests and students assigned to you"
+        metrics={instructorMetrics}
+      />
 
       {/* Main Grid: Pending Requests Table & Assigned Subjects */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">

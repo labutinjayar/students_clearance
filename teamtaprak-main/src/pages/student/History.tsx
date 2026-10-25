@@ -49,20 +49,20 @@ export function StudentHistory() {
   };
 
   return (
-    <div className="max-w-[1200px] w-full space-y-6">
+    <div className="max-w-[1200px] w-full space-y-5 sm:space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-[28px] font-black text-sky-950 mb-1 tracking-tight">
+          <h1 className="text-2xl sm:text-[28px] font-black text-sky-950 mb-1 tracking-tight">
             Request <span className="text-yellow-600">History</span>
           </h1>
-          <p className="text-sky-900/75 text-[15px] font-medium">Audit and review your previous clearance signature requests and approval logs.</p>
+          <p className="text-sky-900/75 text-xs sm:text-[15px] font-medium">Audit and review your previous clearance signature requests and approval logs.</p>
         </div>
 
         <button
           onClick={handleRefresh}
           disabled={isRefreshing}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 border border-yellow-500 text-yellow-950 text-xs font-black rounded-xl shadow-xs transition-colors self-start sm:self-auto"
+          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 border border-yellow-500 text-yellow-950 text-xs font-black rounded-xl shadow-xs transition-colors self-start sm:self-auto"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-yellow-900' : 'text-yellow-900'}`} />
           Refresh
@@ -70,8 +70,8 @@ export function StudentHistory() {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-white/95 backdrop-blur-xs p-4 rounded-3xl border-2 border-sky-200/80 shadow-xs">
-        <div className="relative flex-1 max-w-md">
+      <div className="flex flex-col gap-3 sm:gap-4 bg-white/95 backdrop-blur-xs p-3 sm:p-4 rounded-3xl border-2 border-sky-200/80 shadow-xs">
+        <div className="relative w-full md:max-w-md">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-sky-500" />
           <input
             type="text"
@@ -83,13 +83,13 @@ export function StudentHistory() {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-black text-sky-900 uppercase mr-1">Filter:</span>
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
+          <span className="col-span-2 sm:col-span-1 text-[10px] sm:text-xs font-black text-sky-900 uppercase">Filter by status</span>
           {(['All', 'Pending', 'Approved', 'Rejected'] as const).map((status) => (
             <button
               key={status}
               onClick={() => setFilterStatus(status)}
-              className={`px-3.5 py-1.5 text-xs font-black rounded-xl transition-all ${
+              className={`w-full sm:w-auto px-3.5 py-1.5 text-xs font-black rounded-xl transition-all ${
                 filterStatus === status
                   ? 'bg-yellow-400 text-yellow-950 border border-yellow-500 shadow-xs'
                   : 'bg-sky-100 text-sky-900 hover:bg-sky-200'
@@ -119,10 +119,10 @@ export function StudentHistory() {
             return (
               <div 
                 key={req.id} 
-                className="bg-white/95 backdrop-blur-xs rounded-2xl border-2 border-sky-200/80 shadow-xs p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-yellow-300 transition-colors"
+                className="bg-white/95 backdrop-blur-xs rounded-2xl border-2 border-sky-200/80 shadow-xs p-3 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 hover:border-yellow-300 transition-colors"
               >
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-2xs ${
+                <div className="flex min-w-0 items-start gap-3 sm:items-center sm:gap-4">
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-2xs ${
                     isApproved ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
                     isPending ? 'bg-yellow-100 text-yellow-900 border border-yellow-300' :
                     'bg-red-100 text-red-800 border border-red-300'
@@ -132,21 +132,20 @@ export function StudentHistory() {
                      <AlertCircle className="w-6 h-6" />}
                   </div>
 
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-black text-sky-950 text-base">{subject?.subjectCode || 'Subject'}</h3>
-                      <span className="text-xs text-sky-400">•</span>
-                      <span className="text-xs text-sky-900 font-bold">{subject?.subjectName}</span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                      <h3 className="font-black text-sky-950 text-sm sm:text-base">{subject?.subjectCode || 'Subject'}</h3>
+                      {subject?.subjectName && <span className="text-xs text-sky-400">•</span>}
+                      <span className="min-w-0 text-xs text-sky-900 font-bold break-words">{subject?.subjectName}</span>
                     </div>
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-sky-800/80 mt-1 font-medium">
-                      <span>Assigned Instructor: <strong className="text-sky-950 font-black">{instructor?.name || 'Assigned Faculty'}</strong></span>
-                      <span>•</span>
-                      <span>Requested: {new Date(req.requestedAt || '').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                    <div className="space-y-0.5 text-[11px] sm:text-xs text-sky-800/80 mt-1 font-medium">
+                      <div>Assigned Instructor: <strong className="text-sky-950 font-black">{instructor?.name || 'Assigned Faculty'}</strong></div>
+                      <div>Requested: {new Date(req.requestedAt || '').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-4 self-end md:self-auto">
+                <div className="flex w-full flex-wrap items-center justify-between gap-2 md:w-auto md:justify-start">
                   <span className={`text-[11px] font-black px-3 py-1.5 rounded-full shadow-2xs ${
                     isApproved ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 
                     isPending ? 'bg-yellow-100 text-yellow-900 border border-yellow-300' : 

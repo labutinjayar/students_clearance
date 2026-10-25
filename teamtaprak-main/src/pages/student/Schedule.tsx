@@ -100,7 +100,7 @@ Issued by Office of Academic Affairs, Samar State University.`;
       </div>
 
       {/* Progress Hero Card */}
-      <div className="bg-white/95 backdrop-blur-xs rounded-3xl border-2 border-sky-200/80 shadow-xs p-8 text-center">
+      <div className="bg-white/95 backdrop-blur-xs rounded-3xl border-2 border-sky-200/80 shadow-xs p-5 sm:p-8 text-center">
         {isCompleted ? (
           <div className="space-y-4">
             <div className="w-20 h-20 bg-yellow-300 text-yellow-950 rounded-full flex items-center justify-center mx-auto shadow-xs border-2 border-yellow-400">
@@ -110,7 +110,7 @@ Issued by Office of Academic Affairs, Samar State University.`;
               <div className="inline-block px-3.5 py-1 bg-yellow-400 text-yellow-950 text-xs font-black rounded-full uppercase tracking-wider mb-2 border border-yellow-500">
                 Official Clearance Verified
               </div>
-              <h3 className="text-2xl font-black text-sky-950">CLEARANCE COMPLETED ✓</h3>
+              <h3 className="text-lg sm:text-2xl font-black text-sky-950">CLEARANCE COMPLETED ✓</h3>
               <p className="text-sky-900/75 text-sm font-medium mt-1">All {totalSubjects} required subjects have been digitally signed by your assigned instructors.</p>
             </div>
             
@@ -140,7 +140,7 @@ Issued by Office of Academic Affairs, Samar State University.`;
               <div className="inline-block px-3 py-1 bg-red-100 text-red-900 text-xs font-black rounded-full uppercase tracking-wider mb-2 border border-red-300">
                 Action Required
               </div>
-              <h3 className="text-2xl font-black text-sky-950">CLEARANCE IN PROGRESS</h3>
+              <h3 className="text-lg sm:text-2xl font-black text-sky-950">CLEARANCE IN PROGRESS</h3>
               <p className="text-sky-900/75 text-sm font-medium mt-1">{signedCount} of {totalSubjects} Subjects Signed. Some subject requests were returned with instructor remarks.</p>
             </div>
 
@@ -158,7 +158,7 @@ Issued by Office of Academic Affairs, Samar State University.`;
               <div className="inline-block px-3 py-1 bg-yellow-200 text-yellow-950 text-xs font-black rounded-full uppercase tracking-wider mb-2 border border-yellow-300">
                 Clearance in Progress
               </div>
-              <h3 className="text-2xl font-black text-sky-950">CLEARANCE IN PROGRESS</h3>
+              <h3 className="text-lg sm:text-2xl font-black text-sky-950">CLEARANCE IN PROGRESS</h3>
               <p className="text-sky-900/75 text-sm font-medium mt-1">{signedCount} of {totalSubjects} Subjects Signed</p>
             </div>
 
@@ -172,7 +172,7 @@ Issued by Office of Academic Affairs, Samar State University.`;
 
       {/* Progress Checklist Tracker */}
       <div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col items-start justify-between gap-2 mb-4 sm:flex-row sm:items-center">
           <h3 className="text-[16px] font-black text-sky-950 tracking-tight">Subject Progress Tracker</h3>
           <span className="text-xs font-black text-yellow-800 bg-yellow-100 px-3 py-1 rounded-full border border-yellow-300">{signedCount} / {totalSubjects} Completed</span>
         </div>
@@ -192,10 +192,10 @@ Issued by Office of Academic Affairs, Samar State University.`;
             return (
               <div 
                 key={item.assignment.id} 
-                className="bg-white/95 backdrop-blur-xs rounded-2xl border-2 border-sky-200/80 shadow-xs p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-yellow-300 transition-colors"
+                className="bg-white/95 backdrop-blur-xs rounded-2xl border-2 border-sky-200/80 shadow-xs p-3 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 hover:border-yellow-300 transition-colors"
               >
-                <div className="flex items-center gap-4">
-                  <div className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 shadow-2xs ${
+                <div className="flex min-w-0 items-start gap-3 sm:items-center sm:gap-4">
+                  <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center shrink-0 shadow-2xs ${
                     isSigned ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
                     isPending ? 'bg-yellow-100 text-yellow-900 border border-yellow-300' :
                     isRejected ? 'bg-red-100 text-red-800 border border-red-300' :
@@ -207,20 +207,20 @@ Issued by Office of Academic Affairs, Samar State University.`;
                      <FileText className="w-6 h-6" />}
                   </div>
 
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-black text-sky-950 text-sm">{item.subject.subjectCode}</h4>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                      <h4 className="font-black text-sky-950 text-xs sm:text-sm">{item.subject.subjectCode}</h4>
                       <span className="text-xs text-sky-400">•</span>
-                      <span className="text-xs text-sky-900 font-bold">{item.subject.subjectName}</span>
+                      <span className="min-w-0 text-[11px] sm:text-xs text-sky-900 font-bold break-words">{item.subject.subjectName}</span>
                     </div>
-                    <p className="text-xs text-sky-800/80 mt-0.5 font-medium">
+                    <p className="text-[11px] sm:text-xs text-sky-800/80 mt-0.5 font-medium break-words">
                       Assigned Instructor: <span className="font-bold text-sky-950">{item.instructor?.name || 'Assigned Faculty'}</span>
                     </p>
                   </div>
                 </div>
                 
                 {/* Actions and Status */}
-                <div className="flex flex-wrap items-center gap-2.5 self-end md:self-auto">
+                <div className="flex w-full flex-wrap items-center gap-2 md:w-auto md:justify-end">
                   <span className={`text-[11px] font-black px-3 py-1.5 rounded-full shadow-2xs ${
                     isSigned ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 
                     isPending ? 'bg-yellow-100 text-yellow-900 border border-yellow-300' :
@@ -232,7 +232,7 @@ Issued by Office of Academic Affairs, Samar State University.`;
 
                   <button
                     onClick={() => setSelectedItemForDetails(item)}
-                    className="px-3 py-1.5 text-xs font-bold text-sky-950 bg-sky-100 hover:bg-sky-200 border border-sky-200 rounded-xl transition-colors flex items-center gap-1"
+                    className="px-2.5 sm:px-3 py-1.5 text-xs font-bold text-sky-950 bg-sky-100 hover:bg-sky-200 border border-sky-200 rounded-xl transition-colors flex items-center gap-1"
                   >
                     <Eye className="w-3.5 h-3.5 text-sky-700" />
                     View
@@ -241,7 +241,7 @@ Issued by Office of Academic Affairs, Samar State University.`;
                   {req?.instructorRemarks && (
                     <button
                       onClick={() => setSelectedItemForRemarks(item)}
-                      className="px-3 py-1.5 text-xs font-bold text-yellow-950 bg-yellow-300 hover:bg-yellow-400 border border-yellow-400 rounded-xl transition-colors"
+                      className="px-2.5 sm:px-3 py-1.5 text-xs font-bold text-yellow-950 bg-yellow-300 hover:bg-yellow-400 border border-yellow-400 rounded-xl transition-colors"
                     >
                       View Remarks
                     </button>
@@ -250,7 +250,7 @@ Issued by Office of Academic Affairs, Samar State University.`;
                   {isRejected && (
                     <button
                       onClick={() => navigate('/student/subjects')}
-                      className="px-3 py-1.5 text-xs font-black text-yellow-950 bg-yellow-400 hover:bg-yellow-500 border border-yellow-500 rounded-xl transition-colors flex items-center gap-1 shadow-xs"
+                      className="px-2.5 sm:px-3 py-1.5 text-xs font-black text-yellow-950 bg-yellow-400 hover:bg-yellow-500 border border-yellow-500 rounded-xl transition-colors flex items-center gap-1 shadow-xs"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
                       Request Again

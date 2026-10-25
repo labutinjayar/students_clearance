@@ -2,11 +2,13 @@ import React from 'react';
 import { useDb } from '../../context/DbContext';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import { DashboardMetricPanel } from '../../components/ui/DashboardMetricPanel';
 import { 
   GraduationCap, 
   Users, 
   BookOpen, 
   Layers, 
+  FileSignature,
   CheckCircle, 
   Clock, 
   AlertCircle, 
@@ -50,6 +52,14 @@ export function AdminDashboard() {
     }
   });
 
+  const clearanceMetrics = [
+    { label: 'Enrolled Students', detail: 'Students registered', value: totalStudents, icon: GraduationCap, color: 'text-yellow-700' },
+    { label: 'Faculty Instructors', detail: 'Active faculty accounts', value: totalInstructors, icon: Users, color: 'text-sky-800' },
+    { label: 'Clearance Requests', detail: 'Signature requests submitted', value: totalRequests, icon: FileSignature, color: 'text-sky-950' },
+    { label: 'Completed Clearances', detail: 'Students fully cleared', value: completedClearanceCount, icon: CheckCircle, color: 'text-emerald-700' },
+    { label: 'Pending In-Progress', detail: 'Students awaiting approval', value: pendingClearanceCount, icon: Clock, color: 'text-yellow-700' },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Top Banner */}
@@ -86,33 +96,12 @@ export function AdminDashboard() {
         </div>
       </div>
 
-      {/* 5 Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-white/95 backdrop-blur-xs p-5 rounded-3xl border-2 border-sky-200/80 shadow-xs">
-          <div className="text-[11px] font-black text-sky-900 uppercase tracking-wider mb-2">Enrolled Students</div>
-          <div className="text-3xl font-black text-yellow-600">{totalStudents}</div>
-        </div>
-
-        <div className="bg-white/95 backdrop-blur-xs p-5 rounded-3xl border-2 border-sky-200/80 shadow-xs">
-          <div className="text-[11px] font-black text-sky-900 uppercase tracking-wider mb-2">Faculty Instructors</div>
-          <div className="text-3xl font-black text-sky-900">{totalInstructors}</div>
-        </div>
-
-        <div className="bg-white/95 backdrop-blur-xs p-5 rounded-3xl border-2 border-sky-200/80 shadow-xs">
-          <div className="text-[11px] font-black text-sky-900 uppercase tracking-wider mb-2">Clearance Requests</div>
-          <div className="text-3xl font-black text-sky-950">{totalRequests}</div>
-        </div>
-
-        <div className="bg-white/95 backdrop-blur-xs p-5 rounded-3xl border-2 border-sky-200/80 shadow-xs">
-          <div className="text-[11px] font-black text-sky-900 uppercase tracking-wider mb-2">Completed Clearances</div>
-          <div className="text-3xl font-black text-emerald-700">{completedClearanceCount}</div>
-        </div>
-
-        <div className="bg-white/95 backdrop-blur-xs p-5 rounded-3xl border-2 border-sky-200/80 shadow-xs">
-          <div className="text-[11px] font-black text-sky-900 uppercase tracking-wider mb-2">Pending In-Progress</div>
-          <div className="text-3xl font-black text-yellow-700">{pendingClearanceCount}</div>
-        </div>
-      </div>
+      <DashboardMetricPanel
+        title="Clearance Overview"
+        description="Current enrollment and clearance totals"
+        metrics={clearanceMetrics}
+        columns={5}
+      />
 
       {/* Main Grid: Live Clearance Activity & Quick Links */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -188,61 +177,61 @@ export function AdminDashboard() {
             <h3 className="font-black text-lg text-sky-950 mb-1">System Management</h3>
             <p className="text-xs text-sky-900/70 font-medium mb-4">Quick shortcuts to academic administration panels</p>
 
-            <div className="space-y-2.5">
+            <div className="grid grid-cols-1 min-[360px]:grid-cols-2 gap-2.5">
               <Link
                 to="/admin/students"
-                className="p-3 bg-sky-50/70 hover:bg-yellow-50/50 border border-sky-200 rounded-2xl flex items-center justify-between transition-colors group"
+                className="relative flex min-h-24 min-w-0 flex-col justify-between rounded-xl border border-sky-200 bg-sky-50/70 p-3 pr-8 transition-colors hover:bg-yellow-50/50 group"
               >
-                <div className="flex items-center gap-3">
-                  <GraduationCap className="w-5 h-5 text-yellow-600" />
-                  <div>
-                    <div className="font-black text-sky-950 text-xs group-hover:text-yellow-800">Student Directory</div>
+                <div className="flex min-w-0 items-start gap-2">
+                  <GraduationCap className="w-4 h-4 shrink-0 text-yellow-600" />
+                  <div className="min-w-0">
+                    <div className="font-black text-sky-950 text-xs leading-tight group-hover:text-yellow-800">Student Directory</div>
                     <div className="text-[10px] text-sky-800/80 font-medium">{students.length} Registered</div>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-sky-400 group-hover:text-yellow-600" />
+                <ArrowRight className="absolute right-2.5 top-3 w-3.5 h-3.5 text-sky-400 group-hover:text-yellow-600" />
               </Link>
 
               <Link
                 to="/admin/instructors"
-                className="p-3 bg-sky-50/70 hover:bg-yellow-50/50 border border-sky-200 rounded-2xl flex items-center justify-between transition-colors group"
+                className="relative flex min-h-24 min-w-0 flex-col justify-between rounded-xl border border-sky-200 bg-sky-50/70 p-3 pr-8 transition-colors hover:bg-yellow-50/50 group"
               >
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-sky-700" />
-                  <div>
-                    <div className="font-black text-sky-950 text-xs group-hover:text-yellow-800">Faculty Instructors</div>
+                <div className="flex min-w-0 items-start gap-2">
+                  <Users className="w-4 h-4 shrink-0 text-sky-700" />
+                  <div className="min-w-0">
+                    <div className="font-black text-sky-950 text-xs leading-tight group-hover:text-yellow-800">Faculty Instructors</div>
                     <div className="text-[10px] text-sky-800/80 font-medium">{instructors.length} Instructors</div>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-sky-400 group-hover:text-yellow-600" />
+                <ArrowRight className="absolute right-2.5 top-3 w-3.5 h-3.5 text-sky-400 group-hover:text-yellow-600" />
               </Link>
 
               <Link
                 to="/admin/subjects"
-                className="p-3 bg-sky-50/70 hover:bg-yellow-50/50 border border-sky-200 rounded-2xl flex items-center justify-between transition-colors group"
+                className="relative flex min-h-24 min-w-0 flex-col justify-between rounded-xl border border-sky-200 bg-sky-50/70 p-3 pr-8 transition-colors hover:bg-yellow-50/50 group"
               >
-                <div className="flex items-center gap-3">
-                  <BookOpen className="w-5 h-5 text-yellow-600" />
-                  <div>
-                    <div className="font-black text-sky-950 text-xs group-hover:text-yellow-800">Curricular Subjects</div>
+                <div className="flex min-w-0 items-start gap-2">
+                  <BookOpen className="w-4 h-4 shrink-0 text-yellow-600" />
+                  <div className="min-w-0">
+                    <div className="font-black text-sky-950 text-xs leading-tight group-hover:text-yellow-800">Curricular Subjects</div>
                     <div className="text-[10px] text-sky-800/80 font-medium">{subjects.length} Courses</div>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-sky-400 group-hover:text-yellow-600" />
+                <ArrowRight className="absolute right-2.5 top-3 w-3.5 h-3.5 text-sky-400 group-hover:text-yellow-600" />
               </Link>
 
               <Link
                 to="/admin/assignments"
-                className="p-3 bg-sky-50/70 hover:bg-yellow-50/50 border border-sky-200 rounded-2xl flex items-center justify-between transition-colors group"
+                className="relative flex min-h-24 min-w-0 flex-col justify-between rounded-xl border border-sky-200 bg-sky-50/70 p-3 pr-8 transition-colors hover:bg-yellow-50/50 group"
               >
-                <div className="flex items-center gap-3">
-                  <Layers className="w-5 h-5 text-sky-700" />
-                  <div>
-                    <div className="font-black text-sky-950 text-xs group-hover:text-yellow-800">Subject Assignments</div>
+                <div className="flex min-w-0 items-start gap-2">
+                  <Layers className="w-4 h-4 shrink-0 text-sky-700" />
+                  <div className="min-w-0">
+                    <div className="font-black text-sky-950 text-xs leading-tight group-hover:text-yellow-800">Subject Assignments</div>
                     <div className="text-[10px] text-sky-800/80 font-medium">Instructor Mapping</div>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-sky-400 group-hover:text-yellow-600" />
+                <ArrowRight className="absolute right-2.5 top-3 w-3.5 h-3.5 text-sky-400 group-hover:text-yellow-600" />
               </Link>
             </div>
           </div>
