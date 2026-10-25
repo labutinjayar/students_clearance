@@ -1,0 +1,8 @@
+{
+  "name": "SSU Online Student Clearance System",
+  "description": "Online Student Academic Clearance and Digital Instructor Signature System for Samar State University",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

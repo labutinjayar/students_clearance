@@ -1,0 +1,10 @@
+{
+  "name": "teamtaprak-launcher",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ./teamtaprak-main run dev",
+    "build": "npm --prefix ./teamtaprak-main run build",
+    "preview": "npm --prefix ./teamtaprak-main run preview",
+    "lint": "npm --prefix ./teamtaprak-main run lint"
+  }
+}
